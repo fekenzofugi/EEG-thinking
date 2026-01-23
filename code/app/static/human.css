@@ -1,0 +1,238 @@
+.human-title {
+    text-align: center;
+}
+
+#details-overlay { 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#details-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+}
+
+#details-content img {
+    width: 100%; 
+    max-height: 80vh; 
+    object-fit: contain;
+}
+
+#details-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#final-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: fadeIn 1s;
+}
+
+#final-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    animation: scaleUp 0.5s;
+}
+
+#final-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes scaleUp {
+    0% { transform: scale(0.8); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.legend {
+    margin-top: 1rem;
+}
+.legend h5 {
+    margin-bottom: 0.5rem;
+}
+.legend ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+}
+.legend li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    border: 1px solid #ccc
+}
+
+.image-container {
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    pointer-events: none    ;
+}
+
+.image-container img {
+    width: 100%;
+    object-fit: contain;
+}
+
+.image-container svg {
+    width: 100%;
+    height: fit-content;
+}
+
+svg {
+    width: 100%;
+    pointer-events: none;
+}
+
+svg path {
+    pointer-events: all;
+}
+
+[id^="patch_"], [id^="matplotlib."] {
+    display: none;
+}
+
+svg image {
+    pointer-events: none;
+}
+
+#context-menu {
+    display: none; 
+    position: absolute; 
+    background-color: #f3f1eb; 
+    border: 1px solid #ccc; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 1rem 0.5rem;
+    width: 220px;
+    height: 260px;
+    border-radius: 8px;
+    overflow: hidden;
+    top: 50%;
+}
+
+#context-label {
+    margin-bottom: 1rem;
+}
+
+#context-submit {
+    padding: 10px 20px;
+    background-color: #2c5c5d;
+    color: #f3f1eb;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#context-submit:hover {
+    background-color: #3c6c6d;
+}
+
+#context-close {
+    position: absolute; 
+    background-color: #eee;
+    top: 10px; 
+    right: 10px;
+    color: black;
+    border: none;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#context-close:hover {
+    background-color: #ddd;
+}
+
+#classes-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#previous-button,
+#next-button,
+#end-button {
+    cursor: pointer;
+    padding: 5px;
+    border: none;
+    background-color: #2c5c5d;
+    color: #f3f1eb;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+#previous-button:hover,
+#next-button:hover,
+#end-button:hover {
+    background-color: #3c6c6d;
+}
+
+#user_input, #human-submit-button {
+    display: none;
+}
+
+.container.human {
+    pointer-events: none;
+}
+
+#human-form {
+    margin: 0;
+}

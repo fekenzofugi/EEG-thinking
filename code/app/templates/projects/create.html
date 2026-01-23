@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="login-title">{% block title %}Create Project{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="login-wrapper">
+  <form class="login-form" method="post">
+    
+    <label for="project_name">Project Name:</label>
+    <input type="text" name="project_name" id="project_name" required>
+
+    <label for="service_account">Google Cloud Service Account:</label>
+    <input type="text" name="service_account", id="service_account">
+
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" required></textarea>
+  
+    <input class="auth-button" type="submit" value="Register" onclick="showLoadingSpinner()">
+  </form>
+
+  <div id="loading-overlay" style="display: none;">
+		<div id="loading-spinner">
+			<div class="spinner"></div>
+		</div>
+		<p class="loading-message">Creating Project...</p>
+	</div>
+</div>
+{% endblock %}

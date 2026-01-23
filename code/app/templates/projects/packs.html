@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ project.project_name }} - Images Distribution{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <h3 style="color: #17363f">Users</h3>
+  <form method="post">
+    <div style="overflow-y: scroll; height: 200px; background-color: #f3f1eb; padding: 1rem 1rem 0; display: flex; flex-direction: column;">
+        <label for="pack_size">Pack Size (images):</label>
+        <input type="number" name="pack_size" value="10" min="1" max="100" style="margin-bottom: 0.5rem; width: fit-content;">
+        {% for user in users %}
+            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                {% if user in project.labelers or current_user.id == project.author_id%}
+                    <input type="checkbox" name="labelers" value="{{ user.id }}">
+                {% endif %}
+                <label style="flex-grow: 1;">{{ user['username'] }}</label>
+                {% if user.with_pack %}
+                  <spam style="color: green;">Labeling</spam>
+                {% endif %}
+                {% if user.with_pack == False %}
+                  <spam style="color: red;">Pending</spam>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <input class="auth-button" type="submit" value="Send Packs">
+  </form>
+{% endblock %}

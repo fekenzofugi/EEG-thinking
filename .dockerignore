@@ -1,0 +1,8 @@
+.git/
+.github/
+Dockerfile
+LICENSE
+README.md
+docker-compose.yml
+mkdocs.yml
+/bind_data

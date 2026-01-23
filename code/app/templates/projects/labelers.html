@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ project.project_name }} - Labelers{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <h3 style="color: #17363f">Users</h3>
+  <form method="post">
+    <div style="overflow-y: scroll; height: 200px; background-color: #f3f1eb; padding: 1rem 1rem 0; display: flex; flex-direction: column;">
+      {% for user in users %}
+        <div style="display: flex;">
+          <input type="checkbox" name="labelers" value="{{ user.id }}" {% if user in project.labelers %}checked{% endif %} {% if project.author_id == user.id %}checked disabled{% endif %}>
+          <label>{{ user['username'] }}</label>
+        </div>
+      {% endfor %}
+    </div>
+    <input class="auth-button" type="submit" value="Set Labelers">
+  </form>
+{% endblock %}

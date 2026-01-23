@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ project.project_name }} - Stats{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <!-- Pass Flask data to JavaScript -->
+  <script type="application/json" id="chart-data">
+    {{ labeler_stats | tojson | safe }}
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // Read the JSON data embedded in the script tag
+    const chartData = JSON.parse(document.getElementById("chart-data").textContent);
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: chartData.labels,  // Use labels from Flask
+        datasets: [{
+          label: '# of Labeled Images',
+          data: chartData.values,  // Use values from Flask
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        indexAxis: 'y', // Make the chart horizontal
+        scales: {
+          x: {
+            beginAtZero: true,
+          }
+        }
+      }
+    });
+  </script>
+
+{% endblock %}

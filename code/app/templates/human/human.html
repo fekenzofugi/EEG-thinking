@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="human-title">{% block title %}Dataset Labeling{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <div class="container human">
+
+    <h4> Image {{ roi }} - {{ tile }} - {{ day }}</h4>
+
+    <div class="image-container">
+      {{ img | safe }}
+      <img style="width: 100%; height: 100%;" src='data:image/png;base64,{{ original_image }}'/>
+    </div>
+    
+    <div class="legend">
+      <h5>Legend:</h5>
+      <ul>
+        <li><span class="legend-color" style="background-color: rgba(0, 0, 0, 0.65);"></span> Other (0)</li>
+      <li><span class="legend-color" style="background-color: rgba(255, 0, 0, 0.35);"></span> Soil (1)</li>
+      <li><span class="legend-color" style="background-color: rgba(255, 255, 0, 0.35);"></span> Herb (2)</li>
+      <li><span class="legend-color" style="background-color: rgba(0, 0, 255, 0.35);"></span> Mulching (3)</li>
+      <li><span class="legend-color" style="background-color: rgba(0, 255, 255, 0.35);"></span> Grow (4)</li>
+      <li><span class="legend-color" style="background-color: rgba(0, 255, 0, 0.35);"></span> Vegetation (5)</li>
+      <li><span class="legend-color" style="background-color: rgba(35, 120, 255, 0.35);"></span> Greenhouse (6)</li>
+      <li><span class="legend-color" style="background-color: rgba(255, 0, 255, 0.35);"></span> Florest (7)</li>
+      <li><span class="legend-color" style="background-color: rgba(255, 255, 255, 0.35);"></span> Unknown (8)</li>
+      </ul>
+    </div>
+  </div>
+
+  
+  <form id="human-form" method="post">
+
+    <div>
+      {% if page > 1 %}
+        <button id="previous-button">Previous</button>
+      {% endif %}
+        <span>Image {{ page }} of {{ total_pages }}</span>
+      {% if page <= total_pages %}
+        <button id="next-button">Next</button>
+      {% endif %}
+        <button id="end-button">End</button>
+    </div>
+    <label for="user_input"></label>
+    <input type="text" name="user_input" id="user_input" autocomplete="off">
+
+    <div id="context-menu">
+      <label id="context-label" for="classes">:</label>
+      <div id="classes-container">
+      </div>
+      <input type="hidden" name="selected_classes" id="selected_classes">
+      <button id="context-submit" type="submit">Update</button>
+      <button id="context-close">X</button>
+    </div>
+
+    <div>
+      <button class="create-submit" type="submit" id="human-submit-button">Submit</button>
+    </div>
+  </form>
+
+  {% if final %}
+    <div id="final-overlay">
+      <div id="final-content">
+        <h2 style="color: green;">Complete!</h2>
+        <p>You have successfully labeled all {{ page }} images.</p>
+        <button id="final-button" onclick="closeFinalModal()">Close</button>
+      </div>
+    </div>
+    <script>
+      function closeFinalModal() {
+        document.getElementById('final-overlay').style.display = 'none';
+      }
+    </script>
+
+  {% endif %}
+
+  <script src="{{ url_for('static', filename='scripts/human.js') }}"></script>
+{% endblock %}

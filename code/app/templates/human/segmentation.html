@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1 class="create-title">{% block title %}Dataset Segmentation{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="login-wrapper">
+      <form class="login-form" method="post">
+        <div style="text-align: center;">
+            <label for="segment">Do you want to segment the dataset?</label>
+            <p></p>
+            <input type="radio" id="yes" name="segment" value="yes" checked>
+            <label for="yes">Yes</label>
+            <input type="radio" id="no" name="segment" value="no">
+            <label for="no">No</label>
+        </div>
+        <div>
+          <button class="create-submit" type="submit" onclick="showLoadingSpinner()" id="submit-button" >Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="loading-overlay" style="display: none;">
+    <div id="loading-spinner">
+      <div class="spinner"></div>
+    </div>
+    <p class="loading-message">Segmenting Dataset...</p>
+  </div>
+{% endblock %}

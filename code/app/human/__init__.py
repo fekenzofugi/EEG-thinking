@@ -1,0 +1,1 @@
+from app.human.views import human_bp

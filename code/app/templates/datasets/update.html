@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ dataset['title'] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form class="login-form" method="post">
+    <label style="font-size: 1rem;" for="title">Title</label>
+    <input style="max-width: 30%;" name="title" id="title" value="{{ dataset.title }}" required>
+    <p>Created by {{ users_dict[dataset.dataset_author_id] }} || id: {{ dataset_author_id }}</p>
+    <h4 style="font-size: 1rem; margin: 0.2rem 0;">Dataset Type</h4>
+    <p style="margin: 0.2rem 0;">{{ dataset.ds_type }}</p>
+    <h4 style="font-size: 1rem; margin: 0.2rem 0;">Bands</h4>
+    <p style="margin: 0.2rem 0;">{{ dataset.bands }}</p>
+    <h4 style="font-size: 1rem; margin: 0.2rem 0;">Indices</h4>
+    <p style="margin: 0.2rem 0;">{{ dataset.indices }}</p>
+    <h4 style="font-size: 1rem; margin: 0.2rem 0;">Masks</h4>
+    <p style="margin: 0.2rem 0;">{{ dataset.masks }}</p>
+    <h4 style="font-size: 1rem; margin: 0.2rem 0;">CRS</h4>
+    <p style="margin: 0.2rem 0;">{{ dataset.crs }}</p>
+    <h4 style="font-size: 1rem; margin: 0.2rem 0;">Date Range</h4>
+    <p style="margin: 0.2rem 0;">{{ dataset.starting_date }} - {{ dataset.ending_date }}</p>
+    <h4 style="font-size: 1rem; margin: 0.2rem 0;">Cloud Cover</h4>
+    <p style="margin: 0.2rem 0;">{{ dataset.cloud_cover }}%</p>
+    
+    <input class="edit-submit" type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('datasets.delete', project_name=project_name, title=dataset.title) }}" method="post">
+    <input class="danger delete-submit" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}

@@ -1,0 +1,7 @@
+solara==1.42.0 
+leafmap==0.42.9 
+geopandas==0.14.4 
+gunicorn==23.0.0 
+flask==3.1.0 
+simple_websocket==1.1.0 
+flask_sock

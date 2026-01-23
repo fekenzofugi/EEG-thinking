@@ -1,0 +1,20 @@
+FROM python:3.12.3-slim
+
+# Set the working directory
+WORKDIR /solara_app
+
+COPY solara_entrypoint.sh /solara_app
+# Copy the rest of the application code
+COPY code/roi_selector /solara_app
+COPY requirements_solara.txt /solara_app/requirements_solara.txt
+
+# Install required packages
+RUN pip install --no-cache-dir -r /solara_app/requirements_solara.txt
+
+# Set the environment variables
+RUN chmod +x solara_entrypoint.sh
+
+# Expose the port the app runs on
+EXPOSE 5001
+
+ENTRYPOINT [ "./solara_entrypoint.sh" ]

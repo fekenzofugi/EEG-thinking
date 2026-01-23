@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1 style="text-align: center;">{% block title %}Generate Gif{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="login-wrapper">
+        <form class="login-form" method="post" enctype="multipart/form-data" style="max-width: 600px; margin: auto; padding: 20px; border-radius: 10px;" onsubmit="updateSelectedBands(); updateSelectedIndices();">
+            <div style="text-align: center;">
+                <label for="generateGif">Do you want to generate a GIF?</label>
+                <input type="radio" id="yes" name="generateGif" value="yes" checked>
+                <label for="yes">Yes</label>
+                <input type="radio" id="no" name="generateGif" value="no">
+                <label for="no">No</label>
+            </div>
+            <div id="type" style="margin-bottom: 20px; display: flex; align-items: center;">
+                <label for="gif-type">Gif Type:</label>
+                <select name="gif-type" id="gif-type">
+                    {% for cm in data %}
+                        <option value="{{ cm }}">{{ cm }}</option>
+                    {% endfor %}
+                </select>  
+            </div>
+            
+            <div id="Monocromatic" style="margin-bottom: 20px; display: none; align-items: center;">
+                <label for="gif-bands0">Band: </label>
+                <select name="gif-bands0" id="gif-bands0">
+                    {% for band in selected_bands %}
+                        <option value="{{ band }}">{{ band }}</option>
+                    {% endfor %}
+                </select>  
+            </div>
+    
+            <div id="RGB" style="margin-bottom: 20px; display: none; align-items: center;">
+                <label for="R">Red:</label>
+                <select name="R" id="R">
+                    <option value="B4">B4</option>
+                </select>
+                <label for="G">Green:</label>
+                <select name="G" id="G">
+                    <option value="B3">B3</option>
+                </select>
+                <label for="B">Blue:</label>
+                <select name="B" id="B">
+                    <option value="B2">B2</option>
+                </select>
+            </div>
+    
+            <div id="Custom" style="margin-bottom: 20px; display: none; align-items: center;">
+              <label for="gif-bands1">Red:</label>
+              <select name="gif-bands1" id="gif-bands1">
+                  {% for band in selected_bands %}
+                      <option value="{{ band }}">{{ band }}</option>
+                  {% endfor %}
+              </select>
+              <label for="gif-bands2">Green:</label>
+              <select name="gif-bands2" id="gif-bands2">
+                  {% for band in selected_bands %}
+                      <option value="{{ band }}">{{ band }}</option>
+                  {% endfor %}
+              </select>
+              <label for="gif-bands3">Blue:</label>
+              <select name="gif-bands3" id="gif-bands3">
+                  {% for band in selected_bands %}
+                      <option value="{{ band }}">{{ band }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+    
+            <script>
+                document.querySelectorAll('input[name="generateGif"]').forEach((elem) => {
+                    elem.addEventListener("change", function(event) {
+                        var typeDiv = document.getElementById("type");
+                        var bandsDiv1 = document.getElementById("Monocromatic");
+                        var bandsDiv2 = document.getElementById("RGB");
+                        var bandsDiv3 = document.getElementById("Custom");
+    
+                        if (event.target.value === "yes") {
+                            typeDiv.style.display = "flex";
+                            bandsDiv1.style.display = "flex";
+                        } else {
+                            typeDiv.style.display = "none";
+                            bandsDiv1.style.display = "none";
+                            bandsDiv2.style.display = "none";
+                            bandsDiv3.style.display = "none";
+                        }
+                    });
+                });
+    
+                document.getElementById("gif-type").addEventListener("change", function(event) {
+                    var bandsDiv1 = document.getElementById("Monocromatic");
+                    var bandsDiv2 = document.getElementById("RGB");
+                    var bandsDiv3 = document.getElementById("Custom");
+    
+                    bandsDiv1.style.display = "none";
+                    bandsDiv2.style.display = "none";
+                    bandsDiv3.style.display = "none";
+    
+                    if (event.target.value.toUpperCase() === "MONOCROMATIC") {
+                        bandsDiv1.style.display = "flex";
+                    } 
+                    if (event.target.value.toUpperCase() === "RGB") {
+                        bandsDiv2.style.display = "flex";
+                    } 
+                    if (event.target.value.toUpperCase() === "CUSTOM") {
+                        bandsDiv3.style.display = "flex";
+                    }
+                });
+    
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.getElementById("gif-type").value = "Monocromatic";
+                    document.getElementById("Monocromatic").style.display = "flex";
+                });
+            </script>
+    
+            <hr>
+            
+            <div>
+                <button type="submit" onclick="showLoadingSpinner" class="create-submit">Submit</button>
+            </div>
+            
+        </form>    
+    </div>
+        <div id="loading-overlay" style="display: none;">
+        <div id="loading-spinner">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    <script>
+    function showLoadingSpinner() {
+        document.getElementById('loading-overlay').style.display = 'flex';
+      }
+  
+      document.querySelector('form').addEventListener('submit', function() {
+        showLoadingSpinner();
+      });
+    </script>
+{% endblock %}

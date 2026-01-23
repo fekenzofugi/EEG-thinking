@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1 class="create-title">{% block title %}Generate Dataset{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<div class="create-container">
+		<form class="create-form" method="post" enctype="multipart/form-data" onsubmit="updateSelectedBands(); updateSelectedIndices(); updateSelectedMasks()">
+			<label for="rois" >ROIs: {{num_rois}}</label>
+			<a class="rois-link" href="{{ url_for('datasets.rois', project_name=project_name) }}">Select ROIs</a>
+			<label for="title">Dataset Name</label>
+			<input name="title" id="title" value="{{ request.form['title'] }}" required oninput="checkTitle()">
+	
+			<div class="select-container">
+				<label for="ds_type">Dataset Type:</label>
+				<select name="ds_type" id="ds_type">
+					{% for ds_type in ds_types %}
+					<option value="{{ ds_type }}">{{ ds_type }}</option>
+					{% endfor %}
+				</select>  
+			</div>
+
+			<div class="select-container">
+				<label for="body">Image Type:</label>
+				<select name="body" id="body">
+					{% for cm in data %}
+					<option value="{{ cm }}">{{ cm }}</option>
+					{% endfor %}
+				</select>  
+			</div>
+
+			<div class="select-container">
+				<label for="dimension">Image Dimensions:</label>
+				<select name="dimensions" id="dimensions">
+					{% for dimension in dimensions %}
+					<option value="{{ dimension }}">{{ dimension }}</option>
+					{% endfor %}
+				</select>  
+			</div>
+
+			<div class="text-input-container">
+				<label for="crs">Coordernate Reference System:</label>
+				<input type="text" id="crs" name="crs" value="EPSG:4326" required>
+			</div>
+
+			<div class="numeric-input-container" id="num_sample_tiles_container">
+				<label for="num_sample_tiles">Number of Sample Tiles:</label>
+				<input type="number" id="num_sample_tiles" name="num_sample_tiles" min="1" value="10" required>
+			</div>
+
+			<div class="numeric-input-container" id="overlap_container">
+				<label for="num_sample_tiles">Images Overlap (pixels):</label>
+				<input type="number" id="overlap" name="overlap" min="1" value="1" required>
+			</div>
+
+			<div class="cloud-percentage">
+				<label for="cloud_percentage">Maximum Cloud Percentage:</label>
+				<input type="range" id="cloud_percentage" name="cloud_percentage" min="0" max="100" value="50" oninput="this.nextElementSibling.value = this.value">
+				<output id="cloud_percentage_output">50%</output>
+				<script>
+					document.getElementById('cloud_percentage').addEventListener('input', function() {
+					document.getElementById('cloud_percentage_output').value = this.value + '%';
+					});
+				</script>
+			</div>
+			
+			<div class="date-container">
+				<label for="start_date">Start Date:</label>
+				<input type="date" id="start_date" name="start_date" value="2024-06-01">
+			</div>
+			
+			<div class="date-container">
+				<label for="end_date">End Date:</label>
+				<input type="date" id="end_date" name="end_date" value="2024-10-01">
+			</div>
+			
+			<div id="bands-wrapper">
+				<label for="bands">Bands:</label>
+				<div id="bands-container">
+				</div>
+				<input type="hidden" name="selected_bands" id="selected_bands">
+				<div class="buttons-wrapper">
+					<button class="select-all" type="button" onclick="selectAllBands(true)">Select All</button>
+					<button class="deselect-all" type="button" onclick="selectAllBands(false)">Deselect All</button>
+				</div>
+			</div>
+	
+			<div id="indices-wrapper">
+				<label for="indices">Indices:</label>
+				<div id="indices-container">
+				</div>
+				<input type="hidden" name="selected_indices" id="selected_indices">
+				<div class="buttons-wrapper">
+					<button class="select-all" type="button" onclick="selectAllIndices(true)">Select All</button>
+					<button class="deselect-all" type="button" onclick="selectAllIndices(false)">Deselect All</button>
+				</div>
+			</div>
+	
+			<div id="masks-wrapper">
+				<label for="selected_masks" style="display: block; margin-top: 5px;">Cloud Masks:</label>
+				<div id="masks-container">
+				</div>
+				<input type="hidden" name="selected_masks" id="selected_masks">
+				<div class="buttons-wrapper">
+					<button class="select-all" type="button" onclick="selectAllMasks(true)">Select All</button>
+					<button class="deselect-all" type="button" onclick="selectAllMasks(false)">Deselect All</button>
+				</div>
+			</div>
+			
+			<div>
+				<button class="create-submit" type="submit" onclick="showLoadingSpinner()" id="submit-button" disabled>Generate Dataset</button>
+			</div>
+		</form>
+	</div>
+	
+	<div id="loading-overlay" style="display: none;">
+		<div id="loading-spinner">
+			<div class="spinner"></div>
+		</div>
+		<p class="loading-message">Generating Dataset...</p>
+	</div>
+
+	<script src="{{ url_for('static', filename='scripts/create.js') }}"></script>
+{% endblock %}

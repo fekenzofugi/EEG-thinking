@@ -1,0 +1,150 @@
+.create-title {
+    text-align: center;
+}
+
+.create-container {
+    display: flex;
+    justify-content: center;
+}
+
+.create-form {
+    width: 60%;
+    margin: auto; 
+    padding: 20px; 
+    border-radius: 10px;
+}
+
+.create-form label {
+    display: block; 
+    margin-bottom: 10px;
+}
+
+.create-form a {
+    display: block; 
+    margin-bottom: 20px; 
+    color: #2196F3;
+}
+
+.create-form #title {
+    width: 100%; 
+    padding: 10px; 
+    margin-bottom: 20px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+}
+
+.create-form .select-container,
+.create-form .cloud-percentage,
+.date-container {
+    margin-bottom: 1.3rem;
+} 
+
+.text-input-container {
+    margin-bottom: 0.5rem;
+}
+
+.create-form .numeric-input-container{
+    margin-bottom: 1rem;
+}
+
+.date-container {
+    margin-bottom: 0.6rem;
+}
+
+.create-form .numeric-input-container input {
+    max-width: 4rem;
+}
+
+.create-form #cloud-percentage {
+    width: 100%;
+}
+
+.create-form #cloud-percentage-output {
+    display: block; 
+}
+
+.create-form #start_date,
+.create-form #end_date {
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+}
+
+#bands-wrapper,
+#indices-wrapper,
+#masks-wrapper {
+    margin-bottom: 10px;
+}
+
+#bands-container, 
+#indices-container,
+#masks-container {
+    display: flex; 
+    flex-wrap: wrap;
+}
+
+.create-form .buttons-wrapper {
+    display: flex; 
+    gap: 1rem
+}
+
+.create-form select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.create-form #crs {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.create-form #overlap,
+.create-form #num_sample_tiles {
+    padding: 5px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+}
+
+.create-form .buttons-wrapper .select-all {
+    margin-bottom: 10px; 
+    background-color: #2196F3; 
+    color: white; 
+    border: none; 
+    padding: 3px 6px; 
+    border-radius: 5px; 
+    max-width: fit-content;
+}
+
+.create-form .buttons-wrapper .deselect-all {
+    margin-bottom: 10px; 
+    background-color: #f44336; 
+    color: white; 
+    border: none; 
+    padding: 3px 6px; 
+    border-radius: 5px; 
+    max-width: fit-content;
+}
+
+.submit-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.create-submit {
+    width: 100%; 
+    padding: 10px; 
+    background-color: #17363f; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+    margin: auto;
+}
+
+.create-submit:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

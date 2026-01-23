@@ -1,0 +1,10 @@
+Number,Name,Color
+0,Other,rgba(0; 0; 0; 0.65)
+1,Soil,rgba(255; 0; 0; 0.35)
+2,Herb,rgba(255; 255; 0; 0.35)
+3,Mulching,rgba(0; 0; 255; 0.35)
+4,Grow,rgba(0; 255; 255; 0.35)
+5,Vegetation,rgba(0; 255; 0; 0.35)
+6,Greenhouse,rgba(35; 120; 255; 0.35)
+7,Florest,rgba(255; 0; 255; 0.35)
+8,Unknown,rgba(255; 255; 255; 0.35)

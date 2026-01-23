@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+	<h1 style="display: none;">{% block title %}Home{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+	<div class="banner-wrapper">
+		<div class="banner">
+			<div class="phrase">
+				<h1>Labeling images made easy</h1>
+				<p>Experience the power of our semi-automatic labeling tool & Generate multimodal datasets effortlessly and enhance your image labeling process with precision and speed.</p>
+				<a href="{{ url_for('auth.register') }}" class="call-to-action">Get Started</a>
+			</div>
+			<img src="{{ url_for('static', filename='images/banner.png') }}" alt="">
+		  </div>
+	</div>
+{% endblock %}

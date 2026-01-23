@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ project.project_name }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form class="login-form" method="post">
+        <label for="project_name">Name:</label>
+        <input type="text" name="project_name" id="project_name" value="{{ project.project_name }}">
+        <label for="description">Description:</label>
+        <textarea name="description" id="description">{{ project.description }}</textarea>
+        <label for="service_account">Google Service Account Email:</label>
+        <input type="text" name="service_account" id="service_account" value="{{ project.service_account }}">
+        <div class="datasets-section">
+            <h3>Datasets:</h3>
+            {% for dataset in datasets %}
+            <div class="dataset-item">
+                <spam>{{ dataset.title }}</spam>
+            </div>
+            {% endfor %}
+        </div>
+        <input class="edit-submit" type="submit" value="Save">
+    </form>
+    <hr>
+    <form action="{{ url_for('projects.delete', project_name=project.project_name) }}" method="post">
+        <input class="danger delete-submit" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    </form>
+    <p class="alert-message" style="color: red; font-size: small;">Deleting the project will delete all datasets inside it.</p>
+{% endblock %}

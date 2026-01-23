@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Projects{% endblock %}</h1>
+  {% if session['user_id']%} 
+    <a class="action generate-projects" href="{{ url_for('projects.create') }}">
+      New project 
+    </a>
+  {% endif %}  
+{% endblock %}
+
+{% block content %}
+  <div class="project-wrapper">
+    {% for project in projects %}
+      <a class="" href="{{ url_for('datasets.index', project_name=project['project_name']) }}">
+        <div class="project">
+          <h1>{{ project['project_name'] }}</h1>
+          <div class="about">by {{ users[project['author_id']] }} on {{ project['created'].strftime('%Y-%m-%d') }}</div>
+          <p>
+            {{ project['description'] }}
+          </p>
+        </div>
+      </a>
+      {% if not loop.last %}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,107 @@
+services:
+  flask_app:
+    container_name: flask_app
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+      - redis
+      - solara_app
+    volumes:
+      - type: bind
+        source: ./bind_data
+        target: /data
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - NVIDIA_MEMORY_LIMIT=4096 # Limit GPU memory to 4096 MiB (4 GiB)
+    networks:
+      - geohuman-network
+      - postgres-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: "nvidia"
+              count: 1
+              capabilities: ["gpu"]
+    
+  solara_app:
+    container_name: solara_app
+    build:
+      context: .
+      dockerfile: Dockerfile.solara
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db
+    networks:
+      - geohuman-network
+      - postgres-network
+    volumes:
+      - type: bind
+        source: ./bind_data
+        target: /data
+    
+  redis:
+    image: redis:8.0-M03-alpine
+    container_name: redis
+    networks:
+      - geohuman-network
+    ports:
+      - "6379:6379"
+
+  db:
+    image: postgis/postgis:17-3.5
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword      
+    ports:
+      - "5432:5432"
+    networks:
+      - geohuman-network
+      - postgres-network
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    ports:
+      - "5050:5050"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 5050
+    networks:
+      - postgres-network
+    depends_on:
+      - db
+  
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile.nginx
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - flask_app
+      - solara_app
+    networks:
+      - geohuman-network
+
+networks:
+  geohuman-network:
+    driver: bridge
+  postgres-network:
+    driver: bridge    
+
+volumes:
+  db_data:
